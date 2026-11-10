@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="336" viewBox="0 0 840 336" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif" role="img" aria-label="Selected impact">
+<title>Selected impact</title>
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/>
+  </linearGradient>
+</defs>
+<style>
+  .tile { opacity:0; animation: rise .6s ease-out forwards; }
+  .bar  { transform-box: fill-box; transform-origin: left; transform: scaleX(0); animation: grow .7s ease-out forwards; }
+  @keyframes rise { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+  @keyframes grow { to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) { .tile,.bar { animation:none; opacity:1; transform:none; } }
+</style>
+
+<g class="tile" style="animation-delay:0.00s">
+  <rect x="12" y="12" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="32" y="32" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.25s"/>
+  <text x="32" y="84" font-size="40" font-weight="800" fill="url(#g)">$7,000</text>
+  <text x="32" y="114" font-size="17" font-weight="700" fill="#e6edf3">SuperHack 2025 runner-up</text>
+  <text x="32" y="138" font-size="13" fill="#8b949e">out of 10,000+ teams worldwide</text>
+</g>
+<g class="tile" style="animation-delay:0.12s">
+  <rect x="288" y="12" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="308" y="32" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.37s"/>
+  <text x="308" y="84" font-size="40" font-weight="800" fill="url(#g)">6×</text>
+  <text x="308" y="114" font-size="17" font-weight="700" fill="#e6edf3">Hackathon wins</text>
+  <text x="308" y="138" font-size="13" fill="#8b949e">$10,000+ in cumulative prizes</text>
+</g>
+<g class="tile" style="animation-delay:0.24s">
+  <rect x="564" y="12" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="584" y="32" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.49s"/>
+  <text x="584" y="84" font-size="40" font-weight="800" fill="url(#g)">60%</text>
+  <text x="584" y="114" font-size="17" font-weight="700" fill="#e6edf3">LLM cost cut</text>
+  <text x="584" y="138" font-size="13" fill="#8b949e">token optimisation, live platform</text>
+</g>
+<g class="tile" style="animation-delay:0.36s">
+  <rect x="12" y="174" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="32" y="194" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.61s"/>
+  <text x="32" y="246" font-size="40" font-weight="800" fill="url(#g)">100+</text>
+  <text x="32" y="276" font-size="17" font-weight="700" fill="#e6edf3">Users scaled</text>
+  <text x="32" y="300" font-size="13" fill="#8b949e">agentic chatbot, built from scratch</text>
+</g>
+<g class="tile" style="animation-delay:0.48s">
+  <rect x="288" y="174" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="308" y="194" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.73s"/>
+  <text x="308" y="246" font-size="40" font-weight="800" fill="url(#g)">89%</text>
+  <text x="308" y="276" font-size="17" font-weight="700" fill="#e6edf3">Failure-forecast precision</text>
+  <text x="308" y="300" font-size="13" fill="#8b949e">IoT faults predicted 4+ hours ahead</text>
+</g>
+<g class="tile" style="animation-delay:0.60s">
+  <rect x="564" y="174" width="264" height="150" rx="14" fill="#161b22" stroke="#30363d"/>
+  <rect class="bar" x="584" y="194" width="44" height="4" rx="2" fill="url(#g)" style="animation-delay:0.85s"/>
+  <text x="584" y="246" font-size="40" font-weight="800" fill="url(#g)">+20%</text>
+  <text x="584" y="276" font-size="17" font-weight="700" fill="#e6edf3">Edge inference speed</text>
+  <text x="584" y="300" font-size="13" fill="#8b949e">ship-hull detection on 50K+ images</text>
+</g>
+</svg>
