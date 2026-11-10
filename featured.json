@@ -1,0 +1,10 @@
+[
+  {
+    "repo": "shiplog",
+    "tagline": "Changelogs people actually read. Turns git history into plain-language release notes: what changed, who is affected, what to do."
+  },
+  {
+    "repo": "breakproof",
+    "tagline": "Never break at a breakpoint. Turns any AI coding agent into an autonomous responsive-QA engineer across Chromium and WebKit."
+  }
+]

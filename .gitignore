@@ -1,0 +1,4 @@
+dist/
+.claude/
+.DS_Store
+.playwright-mcp/
