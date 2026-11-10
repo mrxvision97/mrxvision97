@@ -28,6 +28,13 @@ I build applications that create real impact, end to end: **idea → architectur
   <picture><source media="(prefers-color-scheme: dark)" srcset="assets/build-fintech-dark.svg" /><img src="assets/build-fintech-light.svg" width="49%" alt="Fintech workflows (contract): collection-workflow automation and internal backend processes for a fintech team." /></picture>
 </p>
 
+### The automation crew
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/crew-dark.svg" />
+  <img src="assets/crew-light.svg" width="100%" alt="The automation crew: four animated helper bots representing the agents I build for lead generation, workflows, marketing and engineering." />
+</picture>
+
 ## Selected impact
 
 <picture>

@@ -59,7 +59,26 @@ CSS = """
 @keyframes mq{to{transform:translateX(var(--l))}}
 .rot{opacity:0;animation:rot 12s infinite}
 @keyframes rot{0%{opacity:0;transform:translateY(10px)}4%,22%{opacity:1;transform:none}26%,100%{opacity:0;transform:translateY(-10px)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}.rise,.bar{opacity:1;transform:none}.rot{opacity:0}.rot0{opacity:1}}
+.bob{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.shadow{transform-box:fill-box;transform-origin:center;animation:shadow 3.2s ease-in-out infinite}
+@keyframes shadow{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.8);opacity:.6}}
+.blink{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+@keyframes blink{0%,91%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+.look{animation:look 7s ease-in-out infinite}
+@keyframes look{0%,35%,100%{transform:translateX(0)}45%,60%{transform:translateX(5px)}70%,85%{transform:translateX(-4px)}}
+.wave{transform-box:fill-box;transform-origin:50% 92%;animation:wave 1.4s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:rotate(18deg)}50%{transform:rotate(42deg)}}
+.glow{transform-box:fill-box;transform-origin:center;animation:glowb 1.8s ease-in-out infinite}
+@keyframes glowb{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(1.35)}}
+.ph1{opacity:0;animation:ph1 6s infinite}.ph2{animation:ph2 6s infinite}
+@keyframes ph1{0%,36%{opacity:1}42%,94%{opacity:0}100%{opacity:1}}
+@keyframes ph2{0%,40%{opacity:0}47%,90%{opacity:1}96%,100%{opacity:0}}
+.dt{animation:dt 1s ease-in-out infinite}
+@keyframes dt{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+.tw{transform-box:fill-box;transform-origin:center;animation:tw 2.8s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.25;transform:scale(.55) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.rise,.bar{opacity:1;transform:none}.rot{opacity:0}.rot0{opacity:1}.ph1{opacity:0}.ph2{opacity:1}}
 """
 
 
@@ -126,6 +145,60 @@ def lines(x: float, y: float, rows: list[str], size: int, fill: str, lh: float =
     return "".join(out)
 
 
+SPARK = "M0,-10 C1.6,-2.2 2.2,-1.6 10,0 C2.2,1.6 1.6,2.2 0,10 C-1.6,2.2 -2.2,1.6 -10,0 C-2.2,-1.6 -1.6,-2.2 0,-10Z"
+
+
+def sparkle(x: float, y: float, s: float, color: str, delay: float) -> str:
+    return (f'<g transform="translate({x},{y}) scale({s})"><path class="tw" d="{SPARK}" fill="{color}" '
+            f'style="animation-delay:-{delay}s"/></g>')
+
+
+def bot(uid: str, c1: str, c2: str, t: dict, delay: float = 0, wave: bool = False) -> str:
+    """An original plush-style helper bot, drawn around (0,0). Blinks, glances, bobs."""
+    eye, d = "#a5f3fc", f"animation-delay:-{delay}s"
+    arm_r = (f'<g class="wave" style="{d}"><rect x="30" y="6" width="13" height="36" rx="6.5" fill="{c2}"/><circle cx="36.5" cy="6" r="8" fill="{c1}"/></g>' if wave
+             else f'<rect x="27" y="38" width="13" height="24" rx="6.5" fill="{c2}"/>')
+    return f"""<defs><linearGradient id="bg{uid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{c1}"/><stop offset="1" stop-color="{c2}"/></linearGradient></defs>
+<ellipse class="shadow" cx="0" cy="84" rx="34" ry="6" fill="{t['text']}" fill-opacity=".14" style="{d}"/>
+<g class="bob" style="{d}">
+  <line x1="0" y1="-46" x2="0" y2="-62" stroke="{c2}" stroke-width="3.5" stroke-linecap="round"/>
+  <circle class="glow" cx="0" cy="-66" r="6" fill="{c1}" style="{d}"/>
+  <rect x="-53" y="-14" width="11" height="26" rx="5.5" fill="{c2}"/><rect x="42" y="-14" width="11" height="26" rx="5.5" fill="{c2}"/>
+  <rect x="-40" y="38" width="13" height="24" rx="6.5" fill="{c2}"/>{arm_r}
+  <rect x="-27" y="30" width="54" height="40" rx="16" fill="url(#bg{uid})"/>
+  <circle class="glow" cx="0" cy="50" r="5" fill="{eye}" style="animation-delay:-{delay + .6}s"/>
+  <rect x="-45" y="-46" width="90" height="78" rx="30" fill="url(#bg{uid})"/>
+  <ellipse cx="-20" cy="-34" rx="16" ry="7" fill="#fff" fill-opacity=".35" transform="rotate(-18 -20 -34)"/>
+  <rect x="-33" y="-30" width="66" height="44" rx="17" fill="#0b0b14"/>
+  <g class="look" style="{d}">
+    <rect class="blink" x="-19" y="-21" width="10" height="17" rx="5" fill="{eye}" style="{d}"/>
+    <rect class="blink" x="9" y="-21" width="10" height="17" rx="5" fill="{eye}" style="{d}"/>
+    <path d="M-8 3 Q0 9 8 3" fill="none" stroke="{eye}" stroke-width="2.6" stroke-linecap="round"/>
+  </g>
+  <circle cx="-25" cy="2" r="3.5" fill="#f472b6" fill-opacity=".7"/><circle cx="25" cy="2" r="3.5" fill="#f472b6" fill-opacity=".7"/>
+</g>"""
+
+
+def bubble(x: float, y: float, text: str, t: dict, delay: float = 0, thinking: bool = False) -> str:
+    """Speech bubble centred on x: typing dots (or a 'Thinking' shimmer), then a status line."""
+    w = max(len(text) * 7.6 + 30, 96)
+    d = f"animation-delay:-{delay}s"
+    first = (f'<text x="{x}" y="{y + 20}" text-anchor="middle" font-size="13" font-weight="600" fill="url(#think)">Thinking…</text>' if thinking else
+             "".join(f'<circle class="dt" cx="{x - 12 + k * 12}" cy="{y + 15}" r="3.2" fill="{t["muted"]}" style="animation-delay:{k * .15:.2f}s"/>' for k in range(3)))
+    return (f'<g><rect x="{x - w / 2:.0f}" y="{y}" width="{w:.0f}" height="30" rx="15" fill="{t["tile"]}" stroke="{t["border"]}"/>'
+            f'<path d="M{x - 6} {y + 29.5} L{x} {y + 37} L{x + 6} {y + 29.5}" fill="{t["tile"]}" stroke="{t["border"]}"/>'
+            f'<rect x="{x - 7}" y="{y + 27}" width="14" height="3" fill="{t["tile"]}"/>'
+            f'<g class="ph1" style="{d}">{first}</g>'
+            f'<text class="ph2" x="{x}" y="{y + 20}" text-anchor="middle" font-family="{MONO}" font-size="12.5" font-weight="600" fill="{t["text"]}" style="{d}">{esc(text)}</text></g>')
+
+
+def think_defs(t: dict) -> str:
+    return (f'<defs><linearGradient id="think" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="140" y2="0" spreadMethod="repeat">'
+            f'<stop offset="0" stop-color="{t["dim"]}"/><stop offset=".5" stop-color="{t["text"]}"/><stop offset="1" stop-color="{t["dim"]}"/>'
+            f'<animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="140 0" dur="1.6s" repeatCount="indefinite"/>'
+            f'</linearGradient></defs>')
+
+
 # ------------------------------------------------------------------ static cards
 
 HERO_ROTATE = [
@@ -153,6 +226,11 @@ def hero(t: dict) -> str:
         body.append(f'<g class="rise" style="animation-delay:{.35 + i * .08:.2f}s"><rect x="{x}" y="262" width="{cw:.0f}" height="28" rx="8" fill="{t["tile"]}" stroke="{t["border"]}"/>'
                     f'<text x="{x + cw / 2:.0f}" y="281" text-anchor="middle" font-size="13" font-weight="600" fill="{t["muted"]}">{esc(c)}</text></g>')
         x += cw + 10
+    body.append(think_defs(t))
+    for (sx, sy, sc, col, dl) in [(650, 92, .9, "g1", 0), (842, 120, .7, "g2", 1.1), (668, 250, .6, "b1", 2), (835, 262, 1, "g1", .6), (612, 168, .5, "g2", 1.7)]:
+        body.append(sparkle(sx, sy, sc, t[col], dl))
+    body.append(bubble(748, 34, "shipping Unbordr", t, thinking=True))
+    body.append(f'<g transform="translate(748,178) scale(1.18)">{bot("h", "#c084fc", "#22d3ee", t, wave=True)}</g>')
     body.append(beam(w, h, dur=8))
     return doc(w, h, t, "".join(body), "Aman Kumar, product-minded engineer in Bangalore. Currently building Unbordr.")
 
@@ -181,7 +259,6 @@ def building(t: dict, b: dict, i: int) -> str:
     body.append(lines(28, 134, rows, 15.5, t["muted"], cls="rise", delay=.1))
     body.append(f'<line x1="28" y1="{h - 52}" x2="{w - 28}" y2="{h - 52}" stroke="{t["border"]}"/>')
     body.append(f'<text x="28" y="{h - 24}" font-family="{MONO}" font-size="13" font-weight="600" fill="url(#tg)">{esc(b["foot"])}</text>')
-    body.append(beam(w, h, delay=i * 1.7))
     return doc(w, h, t, "".join(body), f"{b['title']}: {b['text']}")
 
 
@@ -208,7 +285,6 @@ def impact(t: dict) -> str:
                     f'<text x="{x + 22}" y="{y + 66}" font-size="46" font-weight="800" letter-spacing="-1.5" fill="url(#shine)">{esc(big)}</text>'
                     f'<text x="{x + 22}" y="{y + 100}" font-size="17" font-weight="700" fill="{t["text"]}">{esc(label)}</text>'
                     f'<text x="{x + 22}" y="{y + 124}" font-size="13.5" fill="{t["muted"]}">{esc(sub)}</text></g>')
-    body.append(beam(w, h, dur=9))
     return doc(w, h, t, "".join(body), "Selected impact: " + "; ".join(f"{a} {b}" for a, b, _ in IMPACT))
 
 
@@ -246,7 +322,6 @@ def recognition(t: dict) -> str:
     col(36, "HACKATHONS", "6× winner", "$10,000+ in prizes across AI, ML and robotics", HACKS, 44)
     body.append(f'<line x1="452" y1="36" x2="452" y2="{h - 36}" stroke="{t["border"]}" stroke-dasharray="3 5"/>')
     col(484, "ACADEMICS & LEADERSHIP", "Valedictorian", "Class of 2026", [(a, "violet", b, c) for a, b, c in ACADEMIC], 58)
-    body.append(beam(w, h, dur=10))
     alt = "Recognition: 6× hackathon winner, $10,000+ in prizes. " + "; ".join(f"{n}: {d}" for _, _, n, d in HACKS) + \
           ". Valedictorian, Class of 2026. " + "; ".join(f"{n}, {d}" for _, n, d in ACADEMIC)
     return doc(w, h, t, "".join(body), alt)
@@ -287,9 +362,31 @@ def stack(t: dict) -> str:
         start = 0 if r == 0 else -period
         body.append(f'<g transform="translate({start:.0f},0)"><g class="mq" style="--l:{direction:.0f}px;--d:{period / 28:.0f}s">{"".join(g)}</g></g>')
     body.append('</g>')
-    body.append(beam(w, h, dur=8, delay=2))
     names = ", ".join(n for row in STACK for n, _ in row)
     return doc(w, h, t, "".join(body), f"Stack: {names}")
+
+
+CREW = [
+    ("Scout", "Lead gen", "scouting leads", "#c4b5fd", "#7c3aed"),
+    ("Relay", "Workflows", "syncing tools", "#a5f3fc", "#0891b2"),
+    ("Pixel", "Marketing", "drafting posts", "#fde68a", "#f59e0b"),
+    ("Patch", "Engineering", "running QA", "#fbcfe8", "#db2777"),
+]
+
+
+def crew(t: dict) -> str:
+    w, h = W, 330
+    body = [frame(w, h, t, glows=[(220, 330, 160, "b2", "a1"), (660, 0, 150, "g2", "a2")])]
+    body.append(think_defs(t))
+    for i, (name, role, task, c1, c2) in enumerate(CREW):
+        cx = 110 + i * 220
+        body.append(bubble(cx, 30, task + "…", t, delay=i * 1.5))
+        body.append(f'<g transform="translate({cx},166)">{bot(str(i), c1, c2, t, delay=i * .9, wave=(i == 0))}</g>')
+        body.append(f'<text x="{cx}" y="286" text-anchor="middle" font-size="17" font-weight="800" fill="{t["text"]}">{name}</text>')
+        body.append(f'<text x="{cx}" y="307" text-anchor="middle" font-family="{MONO}" font-size="12" font-weight="600" fill="url(#tg)">{role.upper()}</text>')
+    for (sx, sy, sc, col, dl) in [(220, 120, .6, "g1", .4), (440, 210, .5, "g2", 1.3), (660, 110, .55, "b1", 2.1), (860, 200, .5, "g1", .9), (24, 210, .5, "g2", 1.8)]:
+        body.append(sparkle(sx, sy, sc, t[col], dl))
+    return doc(w, h, t, "".join(body), "The automation crew: agents for lead generation, workflows, marketing and engineering.")
 
 
 def soon(t: dict) -> str:
@@ -392,7 +489,6 @@ def repo_card(t: dict, r: dict, tagline: str | None, i: int) -> str:
             f'<text x="{46 + len(lang) * 8 + 18}" y="{h - 21}" font-size="13" fill="{t["muted"]}">★ {r["stargazers_count"]}</text>',
             f'<text x="{w - 28}" y="{h - 21}" text-anchor="end" font-family="{MONO}" font-size="12.5" fill="url(#tg)">updated {ago(r["pushed_at"])}</text>']
     body.extend(meta)
-    body.append(beam(w, h, delay=i * 2.3))
     return doc(w, h, t, "".join(body), f"{r['name']}: {tagline or r.get('description') or ''}")
 
 
@@ -418,6 +514,7 @@ def main() -> None:
         write(out, "recognition", recognition)
         write(out, "stack", stack)
         write(out, "soon", soon)
+        write(out, "crew", crew)
     else:
         user, token = os.environ["GH_USER"], os.environ["GITHUB_TOKEN"]
         data = gh("https://api.github.com/graphql", token, {"query": QUERY, "variables": {"login": user}})
